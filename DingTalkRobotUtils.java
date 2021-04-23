@@ -1,4 +1,3 @@
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -11,6 +10,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Set;
 
@@ -23,9 +23,8 @@ import java.util.Set;
  *     单文件，使用方便
  *
  * 依赖:
- *     jdk1.8 (其他版本未测试)
- *     spring5 (其他版本未测试)
- *     apache commons codec (不需要加签方式发送消息无需依赖，注释{@link #buildSignUrl}方法即可)
+ *     jdk1.8+ (低版本可自行替换buildSignUrl中Base64方法)
+ *     SpringWeb5 (其他版本未测试)
  *
  * @author Aochong Zhang
  * @version 1.0
@@ -265,6 +264,9 @@ public abstract class DingTalkRobotUtils {
      * @return 请求响应
      */
     public static DingTalkResponse send(String url, DingTalkRequest dingTalkRequest) {
+        if (url == null || url.length() == 0) {
+            throw new IllegalArgumentException("钉钉机器人地址不能为空");
+        }
         return REST_TEMPLATE.postForObject(url, new HttpEntity<>(dingTalkRequest, HEADERS), DingTalkResponse.class);
     }
 
@@ -283,7 +285,7 @@ public abstract class DingTalkRobotUtils {
             mac = Mac.getInstance("HmacSHA256");
             mac.init(new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256"));
             byte[] signData = mac.doFinal(stringToSign.getBytes(StandardCharsets.UTF_8));
-            String sign = URLEncoder.encode(new String(Base64.encodeBase64(signData)),"UTF-8");
+            String sign = URLEncoder.encode(Base64.getEncoder().encodeToString(signData), "UTF-8");
             return url + "&timestamp=" + timestamp + "&sign=" + sign;
         } catch (NoSuchAlgorithmException | InvalidKeyException | UnsupportedEncodingException e) {
             e.printStackTrace();
