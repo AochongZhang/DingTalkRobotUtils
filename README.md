@@ -5,6 +5,11 @@
 	<h2 align="center">钉钉机器人发送工具类</h2>
 </p>
 
+<p align="center">
+	<img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/AochongZhang/DingTalkRobotUtils">
+	<img alt="GitHub" src="https://img.shields.io/github/license/AochongZhang/DingTalkRobotUtils">
+</p>
+
 ### 特性
 
 + 支持所有消息类型，支持加签
