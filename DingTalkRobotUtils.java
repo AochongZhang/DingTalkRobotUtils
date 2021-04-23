@@ -21,13 +21,14 @@ import java.util.Set;
  *     支持所有消息类型
  *     依赖少
  *     单文件，使用方便
+ *     支持发送响应结果检测
  *
  * 依赖:
  *     jdk1.8+ (低版本可自行替换buildSignUrl中Base64方法)
  *     SpringWeb5 (其他版本未测试)
  *
  * @author Aochong Zhang
- * @version 1.0
+ * @version 1.1
  * @date 2021-04-23 09:10
  */
 public abstract class DingTalkRobotUtils {
