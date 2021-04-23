@@ -19,9 +19,8 @@
 
 ### 依赖
 
-+ jdk1.8 (其他版本未测试)
-+ spring5 (其他版本未测试)
-+ apache commons codec (不需要加签方式发送消息无需依赖，注释buildSignUrl方法即可)
++ jdk1.8+ (低版本可自行替换buildSignUrl中Base64方法)
++ SpringWeb5 (其他版本未测试)
 
 ### 使用
 
