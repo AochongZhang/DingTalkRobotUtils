@@ -108,6 +108,7 @@ public abstract class DingTalkRobotUtils {
      * @param title 消息标题
      * @param text 消息内容，如果太长只会部分展示
      * @param messageUrl 点击消息跳转的URL
+     * @param picUrl 图片URL
      * @return 请求响应
      */
     public static DingTalkResponse sendLink(String url, String title, String text, String messageUrl, String picUrl) {
@@ -176,7 +177,7 @@ public abstract class DingTalkRobotUtils {
      * @param title 首屏会话透出的展示内容
      * @param text markdown格式的消息
      * @param singleTitle 单个按钮的标题
-     * @param singleURL 设置此项和singleURL后，btns无效
+     * @param singleURL 点击singleTitle按钮触发的URL, 设置此项和singleURL后，btns无效
      * @return 请求响应
      */
     public static DingTalkResponse sendActionCard(String url, String title, String text, String singleTitle, String singleURL) {
@@ -190,7 +191,7 @@ public abstract class DingTalkRobotUtils {
      * @param title 首屏会话透出的展示内容
      * @param text markdown格式的消息
      * @param singleTitle 单个按钮的标题
-     * @param singleURL 设置此项和singleURL后，btns无效
+     * @param singleURL 点击singleTitle按钮触发的URL, 设置此项和singleURL后，btns无效
      * @param btnOrientation 0：按钮竖直排列 1：按钮横向排列
      * @return 请求响应
      */
