@@ -34,6 +34,7 @@ import java.util.Set;
 public abstract class DingTalkRobotUtils {
     private static final RestTemplate REST_TEMPLATE = new RestTemplate();
     private static final HttpHeaders HEADERS = new HttpHeaders();
+    /** 消息类型 */
     private static final String MSG_TYPE_TEXT = "text";
     private static final String MSG_TYPE_LINK = "link";
     private static final String MSG_TYPE_MARKDOWN = "markdown";
@@ -246,7 +247,7 @@ public abstract class DingTalkRobotUtils {
      *
      * @param url 钉钉机器人地址
      * @param links 链接
-     * @return
+     * @return 请求响应
      */
     public static DingTalkResponse sendFeedCard(String url, List<DingTalkRequestFeedCard.Link> links) {
         DingTalkRequestFeedCard request = new DingTalkRequestFeedCard();
@@ -288,6 +289,19 @@ public abstract class DingTalkRobotUtils {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * 响应结果检测
+     *
+     * @param response 请求响应
+     * @see DingTalkRobotException
+     */
+    public static void checkResponse(DingTalkResponse response) {
+        if (response != null && "0".equals(response.getErrcode())) {
+            return;
+        }
+        throw new DingTalkRobotException(response);
     }
 
 
@@ -680,6 +694,10 @@ public abstract class DingTalkRobotUtils {
         private String errcode;
         private String errmsg;
 
+        public void check() {
+            checkResponse(this);
+        }
+
         public String getErrcode() {
             return errcode;
         }
@@ -702,6 +720,12 @@ public abstract class DingTalkRobotUtils {
                     "errcode='" + errcode + '\'' +
                     ", errmsg='" + errmsg + '\'' +
                     '}';
+        }
+    }
+
+    public static class DingTalkRobotException extends RuntimeException {
+        public DingTalkRobotException(DingTalkResponse response) {
+            super(response == null ? "响应消息为空" : "errcode=" + response.getErrcode() + " errmsg=" + response.getErrmsg());
         }
     }
 }

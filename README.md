@@ -10,6 +10,7 @@
 + 支持所有消息类型，支持加签
 + 依赖少，无需引入特殊依赖
 + 单文件，使用方便快捷
++ 支持发送响应结果检测
 
 ### 依赖
 
@@ -73,6 +74,17 @@ DingTalkRobotUtils.send(钉钉机器人地址, 消息对象);
 ```java
 // 将加签后的url传入发送方法即可
 String url = DingTalkRobotUtils.buildSignUrl(钉钉机器人地址, 密钥)
+```
+
+#### 检测发送响应结果
+
+检测到发送结果错误将抛出DingTalkRobotException异常
+
+```java
+DingTalkResponse response = DingTalkRobotUtils.sendText(钉钉机器人地址, 消息内容);
+DingTalkRobotUtils.checkResponse(response);
+// 或
+DingTalkRobotUtils.sendText(钉钉机器人地址, 消息内容).check();
 ```
 
 更多详细内容可参考代码注释和钉钉机器人官方文档
